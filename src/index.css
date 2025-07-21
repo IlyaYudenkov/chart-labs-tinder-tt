@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @font-face {
     font-family: 'Proxima Nova';
@@ -15,16 +15,16 @@
 }
 
 @theme {
-    --color-primary: #FFFFFF;
+    --color-primary: #ffffff;
     --color-secondary: #111418;
 
-    --color-gray-light: #F0F2F4;
-    --color-gray-blue: #7C8591;
+    --color-gray-light: #f0f2f4;
+    --color-gray-blue: #7c8591;
     --color-dark-gray-blue: #505965;
 
     --font-size-28: 28px;
 }
 
-html{
+html {
     font-family: 'Proxima Nova';
 }
