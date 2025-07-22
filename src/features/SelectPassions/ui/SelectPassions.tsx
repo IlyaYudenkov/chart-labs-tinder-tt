@@ -1,14 +1,14 @@
 import { Button } from '@/shared/UI/Button/ui/Button';
 import { useCallback, useEffect, useState } from 'react';
-import { PASSIONS_DATA_ARRAY } from '../data/signUpForm.data';
-import { PassionButton } from './PassionButton';
+import { PassionButton } from '../components/PassionButton';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { setCurrentStepIndex } from '@/app/store/step/stepSlice';
 import { setPassions } from '@/app/store/auth/authSlice';
+import { PASSIONS_DATA_ARRAY } from '../data/selectPassions.data';
 
-export const StepPassions = () => {
+export const SelectPassions = () => {
     //STATE
-    const [selected, setSelected] = useState<string[]>([]);
+    const [selectedPassions, setSelectedPassions] = useState<string[]>([]);
 
     //RTK
     const { currentStepIndex } = useAppSelector((state) => state.step);
@@ -19,35 +19,35 @@ export const StepPassions = () => {
     useEffect(() => {
         const storedPassions = sessionStorage.getItem('passions');
         if (storedPassions) {
-            setSelected(JSON.parse(storedPassions));
+            setSelectedPassions(JSON.parse(storedPassions));
         } else if (passions) {
-            setSelected(passions);
+            setSelectedPassions(passions);
         }
     }, [passions]);
 
     useEffect(() => {
-        if (selected.length > 0) {
-            sessionStorage.setItem('passions', JSON.stringify(selected));
+        if (selectedPassions.length > 0) {
+            sessionStorage.setItem('passions', JSON.stringify(selectedPassions));
         }
-    }, [selected]);
+    }, [selectedPassions]);
 
     //FUNCTIONS
     const togglePassion = useCallback((passion: string) => {
-        setSelected((prev) =>
+        setSelectedPassions((prev) =>
             prev.includes(passion) ? prev.filter((p) => p !== passion) : [...prev, passion],
         );
     }, []);
 
     const handleSavePassions = useCallback(() => {
-        if (selected.length) {
-            dispatch(setPassions(selected));
+        if (selectedPassions.length) {
+            dispatch(setPassions(selectedPassions));
             dispatch(setCurrentStepIndex(currentStepIndex + 1));
             sessionStorage.setItem('currentStepIndex', String(currentStepIndex + 1));
         }
-    }, [selected, currentStepIndex, dispatch]);
+    }, [selectedPassions, currentStepIndex, dispatch]);
 
     return (
-        <div className="flex flex-col gap-4 ">
+        <div className="flex flex-col gap-4 pb-7">
             <div className="flex flex-col gap-[7px] pt-0 pb-6 px-6 border-b border-gray-blue-muted">
                 <h2 className="text-secondary text-[28px] font-bold">Passions</h2>
                 <p className="text-dark-gray-blue">
@@ -60,15 +60,15 @@ export const StepPassions = () => {
                     <PassionButton
                         key={el}
                         label={el}
-                        disabled={selected.length >= 5 && !selected.includes(el)}
-                        isSelected={selected.includes(el)}
+                        disabled={selectedPassions.length >= 5 && !selectedPassions.includes(el)}
+                        isSelected={selectedPassions.includes(el)}
                         onClick={() => togglePassion(el)}
                     />
                 ))}
             </div>
             <div className="fixed flex justify-center bottom-0 p-6 bg-primary w-full border-t border-gray-blue-muted">
                 <Button
-                    title={`Continue (${selected.length}/5)`}
+                    title={`Continue (${selectedPassions.length}/5)`}
                     className="w-full"
                     onClick={handleSavePassions}
                 />

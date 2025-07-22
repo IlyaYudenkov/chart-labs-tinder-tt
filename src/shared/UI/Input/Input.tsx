@@ -1,30 +1,14 @@
-interface IInput {
-    placeholder?: string;
-    type?: string;
-    value?: string;
-    setValue?: (val: string) => void;
-    defaultValue?: string;
-    name?: string;
-}
+import { PropsWithChildren } from 'react';
+import { InputText } from './Text/InputText';
+import { InputCheckbox } from './Checkbox/InputCheckbox';
+import { InputImage } from './Image/InputImage';
 
-export const Input = ({
-    placeholder,
-    type = 'text',
-    value,
-    setValue,
-    name,
-    defaultValue,
-}: IInput) => {
-    return (
-        <input
-            className="px-3.5 py-3
-         bg-gray-light border rounded-lg border-gray-blue"
-            type={type}
-            placeholder={placeholder}
-            value={value}
-            onChange={(e) => setValue?.(e.target.value)}
-            name={name}
-            defaultValue={defaultValue}
-        />
-    );
+interface IInput extends PropsWithChildren {}
+
+export const Input = ({ children }: IInput) => {
+    return <>{children}</>;
 };
+
+Input.Text = InputText;
+Input.Checkbox = InputCheckbox;
+Input.Image = InputImage;

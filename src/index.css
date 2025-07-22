@@ -20,15 +20,25 @@
 
     --color-gray-light: #f0f2f4;
     --color-gray-blue: #7c8591;
+    --color-light-gray-blue: #E9EBEE;
     --color-dark-gray-blue: #505965;
     --color-gray-blue-light: #b9bfc8;
     --color-gray-blue-muted: #d4d8de;
+    --color-dark-gray-blue-muted: #3C444F;
+    --color-steel-gray: #656E7B;
+    --color-graphite: #21262E;
+
+    --color-bright-red: #FF4458;
 
     --font-size-28: 28px;
 }
 
 html {
     font-family: 'Proxima Nova';
+}
+
+img{
+    max-width: fit-content;
 }
 
 @layer utilities {

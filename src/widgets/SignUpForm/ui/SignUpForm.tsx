@@ -1,8 +1,9 @@
-import { StepName } from '../components/StepName';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { StepPassions } from '../components/StepPassions';
 import { useEffect } from 'react';
 import { setCurrentStepIndex } from '@/app/store/step/stepSlice';
+import { SelectName } from '@/features/SelectName';
+import { SelectPassions } from '@/features/SelectPassions';
+import { UploadTabsSwitcher } from '@/features/UploadImages/ui/UploadTabsSwitcher';
 
 export const SignUpForm = () => {
     //RTK
@@ -17,8 +18,9 @@ export const SignUpForm = () => {
 
     return (
         <div>
-            {currentStepIndex === 0 && <StepName />}
-            {currentStepIndex === 1 && <StepPassions />}
+            {currentStepIndex === 0 && <SelectName />}
+            {currentStepIndex === 1 && <SelectPassions />}
+            {currentStepIndex === 2 && <UploadTabsSwitcher />}
         </div>
     );
 };

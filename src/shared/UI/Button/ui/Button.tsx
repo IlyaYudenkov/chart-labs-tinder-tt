@@ -33,7 +33,11 @@ export const Button = ({
 }: IButton) => {
     const html = (
         <button
-            className={cls(className, variant)}
+            className={cls(
+                'flex justify-center items-center duration-200 ease-in-out',
+                className,
+                variant,
+            )}
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
