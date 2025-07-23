@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
-import { EButtonType } from '../model/button.model';
+import { EButtonType, EButtonVariants } from '../model/button.model';
+import { cls } from '@/shared/lib/classes.lib';
 
 interface IButton {
+    className?: string;
+    variant?: EButtonVariants;
     href?: string;
     title?: string;
     disabled?: boolean;
@@ -15,6 +18,8 @@ interface IButton {
 }
 
 export const Button = ({
+    className,
+    variant = EButtonVariants.gradient,
     href,
     title,
     disabled,
@@ -28,16 +33,17 @@ export const Button = ({
 }: IButton) => {
     const html = (
         <button
-            className={
-                !icon
-                    ? 'bg-gradient-to-r from-[#FD267A] to-[#FF6036] rounded-[22px] p-2 font-bold text-primary'
-                    : ''
-            }
+            className={cls(
+                'flex justify-center items-center duration-200 ease-in-out',
+                className,
+                variant,
+            )}
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             data-hover={dataHover}
             type={type}
+            disabled={disabled}
         >
             {title}
             {icon && <img src={icon} alt="icon" />}

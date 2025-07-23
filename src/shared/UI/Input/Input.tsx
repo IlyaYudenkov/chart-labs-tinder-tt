@@ -1,15 +1,14 @@
-interface IInput {
-    placeholder?: string;
-    type?: string;
-}
+import { PropsWithChildren } from 'react';
+import { InputText } from './Text/InputText';
+import { InputCheckbox } from './Checkbox/InputCheckbox';
+import { InputImage } from './Image/InputImage';
 
-export const Input = ({ placeholder, type = 'text' }: IInput) => {
-    return (
-        <input
-            className="px-3.5 py-3
-         bg-gray-light border rounded-lg border-gray-blue"
-            type={type}
-            placeholder={placeholder}
-        />
-    );
+interface IInput extends PropsWithChildren {}
+
+export const Input = ({ children }: IInput) => {
+    return <>{children}</>;
 };
+
+Input.Text = InputText;
+Input.Checkbox = InputCheckbox;
+Input.Image = InputImage;

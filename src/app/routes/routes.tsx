@@ -1,7 +1,6 @@
 interface IRoot {
     path: string;
     onlyAuth: boolean;
-
     toString: () => string;
 }
 
@@ -29,8 +28,13 @@ class Route {
     }
 }
 
-class MAIN extends Route {
+class PUBLIC extends Route {
     SIGN_UP = this.createPath('/signUp');
 }
 
-export const MAIN_PAGES = new MAIN('');
+class PRIVATE extends Route {
+    LK = this.createPath('/lk', true);
+}
+
+export const PUBLIC_PAGES = new PUBLIC('');
+export const PRIVATE_PAGES = new PRIVATE('');
