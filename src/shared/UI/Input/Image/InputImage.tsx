@@ -26,10 +26,14 @@ export const InputImage = ({ selectedImage, onImageChange }: IInputImage) => {
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const url = URL.createObjectURL(file);
-            setPreviewUrl(url);
-            setIsVisible(true);
-            onImageChange(url);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64 = reader.result as string;
+                setPreviewUrl(base64);
+                setIsVisible(true);
+                onImageChange?.(base64);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -44,9 +48,7 @@ export const InputImage = ({ selectedImage, onImageChange }: IInputImage) => {
 
     return (
         <div
-            className={`w-30 h-40 relative bg-light-gray-blue rounded-[8px] ${
-                !previewUrl ? 'border-4 border-dashed border-gray-blue-light' : ''
-            }`}
+            className={`w-30 h-40 relative bg-light-gray-blue rounded-[8px] ${!previewUrl ? 'border-4 border-dashed border-gray-blue-light' : ''}`}
         >
             {!previewUrl && (
                 <span className="absolute top-0 right-0 w-[5px] h-[5px] bg-gradient-red-to-orange rounded-full" />
@@ -75,7 +77,7 @@ export const InputImage = ({ selectedImage, onImageChange }: IInputImage) => {
                 icon={previewUrl ? XMarkSmall : PlusIcon}
                 variant={previewUrl ? EButtonVariants.xMark : EButtonVariants.plus}
                 onClick={previewUrl ? handleClear : undefined}
-                className="absolute bottom-0 right-[-5px] max-w-7 max-h-7 pointer-events-auto"
+                className="absolute bottom-0 right-[-4px] max-w-7 max-h-7"
             />
         </div>
     );

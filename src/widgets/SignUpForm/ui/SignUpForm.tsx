@@ -13,8 +13,22 @@ export const SignUpForm = () => {
     //EFFECT
     useEffect(() => {
         const storedIndex = sessionStorage.getItem('currentStepIndex');
-        if (storedIndex) dispatch(setCurrentStepIndex(+storedIndex));
+        if (storedIndex) {
+            dispatch(setCurrentStepIndex(+storedIndex));
+        }
     }, []);
+
+    useEffect(() => {
+        const storedIndex = sessionStorage.getItem('currentStepIndex');
+        const hasName = !!sessionStorage.getItem('name');
+
+        // Приоритет: если данных нет — откат на нужный шаг, иначе берем storedIndex
+        if (!hasName) {
+            dispatch(setCurrentStepIndex(0));
+        } else if (storedIndex) {
+            dispatch(setCurrentStepIndex(+storedIndex));
+        }
+    }, [dispatch]);
 
     return (
         <div>

@@ -8,7 +8,6 @@ import { FormEvent, useEffect, useState } from 'react';
 export const SelectName = () => {
     // RTK
     const dispatch = useAppDispatch();
-    const { currentStepIndex } = useAppSelector((state) => state.step);
     const { name: userNameRTK } = useAppSelector((state) => state.auth);
 
     // STATE
@@ -22,7 +21,7 @@ export const SelectName = () => {
             dispatch(setName(storedName));
             setUserName(storedName);
         }
-    }, [dispatch]);
+    }, []);
 
     // FUNCTION
     const handleSaveName = (e: FormEvent<HTMLFormElement>) => {
@@ -34,8 +33,8 @@ export const SelectName = () => {
             setIsNameWarning(false);
             dispatch(setName(userName));
             sessionStorage.setItem('name', userName);
-            dispatch(setCurrentStepIndex(currentStepIndex + 1));
-            sessionStorage.setItem('currentStepIndex', String(currentStepIndex + 1));
+            dispatch(setCurrentStepIndex(1));
+            sessionStorage.setItem('currentStepIndex', String(1));
         }
     };
     return (
