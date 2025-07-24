@@ -12,7 +12,7 @@ import { PreviewTab } from './PreviewTab/PreviewTab';
 export const UploadTabsSwitcher = () => {
     //STATE
     const [selectedTab, setSelectedTab] = useState<IOptionsTab>(STEP_PHOTOS_EDIT_TAB);
-    const [images, setImages] = useState<string[]>([]);
+    const [images, setImages] = useState<string[]>([...Array(9)]);
 
     return (
         <div>

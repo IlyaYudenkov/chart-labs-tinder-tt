@@ -1,6 +1,6 @@
 import { useAppSelector } from '@/app/store';
 import { Slider } from '@/shared/UI/Slider';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const PreviewTab = () => {
     // STATE
@@ -9,16 +9,19 @@ export const PreviewTab = () => {
     // RTK
     const { photos, name, passions } = useAppSelector((state) => state.auth);
 
+    //MEMO
+    const parsedImagesSS = useMemo(() => JSON.parse(sessionStorage.getItem('images') || '[]'), []);
+
     // EFFECT
     useEffect(() => {
-        const imagesSS = sessionStorage.getItem('images');
-
+        let finalImages: string[] = [];
         if (photos && photos.length) {
-            setUserImages(photos);
-        } else if (imagesSS) {
-            const parsed = JSON.parse(imagesSS);
-            if (Array.isArray(parsed)) setUserImages(parsed);
+            finalImages = photos;
+        } else if (parsedImagesSS) {
+            if (Array.isArray(parsedImagesSS)) finalImages = parsedImagesSS;
         }
+        const filteredImages = finalImages.filter((img) => img && img.trim() !== '');
+        setUserImages(filteredImages);
     }, [photos]);
 
     return (

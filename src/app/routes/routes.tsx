@@ -34,6 +34,7 @@ class PUBLIC extends Route {
 
 class PRIVATE extends Route {
     LK = this.createPath('/lk', true);
+    EXPLORE = this.createPath('/explore', true);
 }
 
 export const PUBLIC_PAGES = new PUBLIC('');
