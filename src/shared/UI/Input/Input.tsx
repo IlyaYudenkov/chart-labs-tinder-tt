@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { InputText } from './Text/InputText';
+import { InputText } from './Text/ui/InputText';
 import { InputCheckbox } from './Checkbox/InputCheckbox';
 import { InputImage } from './Image/InputImage';
 
