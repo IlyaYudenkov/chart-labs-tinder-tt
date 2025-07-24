@@ -1,17 +1,27 @@
 import { useRef, useState } from 'react';
-import { SliderProgressBars } from '../../SliderProgressBar';
 import { SlideOverlay } from '../components/SlideOverlay';
+import { SlideActionBar } from '../components/SlideActionBar';
+import { SliderProgressBars } from '../components/SliderProgressBar';
 
-interface ISlider {
+interface ISwipeSlider {
     images?: string[];
     name?: string;
     age?: number;
     passions?: string[];
     isVerified?: boolean;
     hasHelpIcon?: boolean;
+    hasActionBar?: boolean;
 }
 
-export const Slider = ({ images, name, age, passions, isVerified, hasHelpIcon }: ISlider) => {
+export const SwipeSlider = ({
+    images,
+    name,
+    age,
+    passions,
+    isVerified,
+    hasHelpIcon,
+    hasActionBar,
+}: ISwipeSlider) => {
     //STATE
     const [index, setIndex] = useState<number>(0);
 
@@ -38,15 +48,31 @@ export const Slider = ({ images, name, age, passions, isVerified, hasHelpIcon }:
     };
 
     return (
-        <div className="relative w-full h-screen max-h-[85vh] overflow-hidden bg-primary touch-pan-x rounded-[8px]">
+        <div className="relative w-full h-screen max-h-[670px] overflow-hidden rounded-[8px] bg-primary touch-pan-x">
+            {images[index] && (
+                <div
+                    className="absolute inset-0 z-0"
+                    style={{
+                        backgroundImage: `url(${images[index]})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        filter: 'blur(24px)',
+                        transform: 'scale(1.1)',
+                    }}
+                />
+            )}
+
+            <div className="absolute inset-0 bg-black/30 z-0" />
+
             <SliderProgressBars
                 activeIndex={index}
                 total={images.length}
                 className="h-1 absolute top-0 left-0 w-full px-2.5 pt-1 z-10"
                 classNameEl="h-1"
             />
+
             <div
-                className="flex h-full transition-transform duration-300 ease-in-out"
+                className="flex h-full transition-transform duration-300 ease-in-out relative z-10"
                 style={{ transform: `translateX(-${index * 100}%)` }}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
@@ -71,6 +97,7 @@ export const Slider = ({ images, name, age, passions, isVerified, hasHelpIcon }:
                         />
                     </div>
                 ))}
+                {hasActionBar && <SlideActionBar />}
             </div>
         </div>
     );

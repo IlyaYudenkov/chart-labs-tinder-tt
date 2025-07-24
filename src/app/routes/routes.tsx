@@ -30,11 +30,15 @@ class Route {
 
 class PUBLIC extends Route {
     SIGN_UP = this.createPath('/signUp');
+    SIGN_IN = this.createPath('/signIn');
 }
 
 class PRIVATE extends Route {
-    LK = this.createPath('/lk', true);
+    MAIN = this.createPath('/', true);
+    PROFILE = this.createPath('/profile', true);
     EXPLORE = this.createPath('/explore', true);
+    MATCHES = this.createPath('/matches', true);
+    CHATS = this.createPath('/chats', true);
 }
 
 export const PUBLIC_PAGES = new PUBLIC('');

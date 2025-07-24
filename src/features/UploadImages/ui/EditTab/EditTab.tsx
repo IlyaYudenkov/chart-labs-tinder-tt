@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/app/store';
-import { setPhotos } from '@/app/store/auth/authSlice';
+import { setIsAuth, setPhotos } from '@/app/store/auth/authSlice';
 import { Button } from '@/shared/UI/Button/ui/Button';
 import { Input } from '@/shared/UI/Input/Input';
 import { Modal } from '@/shared/UI/Modal';
@@ -27,6 +27,7 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
     useEffect(() => {
         const storedImages = JSON.parse(sessionStorage.getItem('images') || '[]');
         if (storedImages.length > 0) {
+            dispatch(setPhotos(storedImages));
             setImages(storedImages);
         }
     }, []);
@@ -56,7 +57,6 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
             updatedImages[index] = '';
             setImages?.(updatedImages);
             sessionStorage.setItem('images', JSON.stringify(updatedImages));
-
             setIsWarning(!filteredImages.length);
         }
     };
@@ -66,6 +66,8 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
         sessionStorage.setItem('images', JSON.stringify(images));
         setIsOpenModal(true);
         dispatch(setPhotos(images));
+        sessionStorage.setItem('auth', 'true');
+        dispatch(setIsAuth(true));
         setTimeout(() => setIsOpenModal(false), 1000);
     };
 
@@ -104,7 +106,7 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
             </div>
             <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
                 <p className="text-bright-red font-bold text-center text-xl">
-                    Photos have been added successfully!
+                    {filteredImages.length > 1 ? `Photos` : 'Photo'} have been added successfully!
                 </p>
             </Modal>
         </div>

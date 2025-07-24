@@ -6,10 +6,10 @@ import ChatsIcon from '@/shared/assets/images/Chats/ChatsIcon.svg';
 import ProfileIcon from '@/shared/assets/images/Profile/ProfileIcon.svg';
 import { PRIVATE_PAGES } from '@/app/routes/routes';
 
-const TINDER_NAVBAR_LINK_ITEM: IMobileNavbarItem = {
+const MAIN_NAVBAR_LINK_ITEM: IMobileNavbarItem = {
     id: 1,
-    name: 'tinder',
-    href: '',
+    name: 'main',
+    href: PRIVATE_PAGES.MAIN.path,
     icon: TinderIcon,
 };
 
@@ -23,26 +23,26 @@ const EXPLORE_NAVBAR_LINK_ITEM: IMobileNavbarItem = {
 const MATCHES_NAVBAR_LINK_ITEM: IMobileNavbarItem = {
     id: 3,
     name: 'matches',
-    href: '',
+    href: PRIVATE_PAGES.MATCHES.path,
     icon: MatchesIcon,
 };
 
 const CHATS_NAVBAR_LINK_ITEM: IMobileNavbarItem = {
     id: 4,
     name: 'chats',
-    href: '',
+    href: PRIVATE_PAGES.CHATS.path,
     icon: ChatsIcon,
 };
 
 const PROFILE_NAVBAR_LINK_ITEM: IMobileNavbarItem = {
     id: 5,
     name: 'profile',
-    href: '',
+    href: PRIVATE_PAGES.PROFILE.path,
     icon: ProfileIcon,
 };
 
 export const MOBILE_NAVBAR_ITEMS_ARRAY: IMobileNavbarItem[] = [
-    TINDER_NAVBAR_LINK_ITEM,
+    MAIN_NAVBAR_LINK_ITEM,
     EXPLORE_NAVBAR_LINK_ITEM,
     MATCHES_NAVBAR_LINK_ITEM,
     CHATS_NAVBAR_LINK_ITEM,

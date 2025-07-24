@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/app/store';
-import { Slider } from '@/shared/UI/Slider';
+import { SwipeSlider } from '@/features/SwipeSlider';
 import { useEffect, useMemo, useState } from 'react';
 
 export const PreviewTab = () => {
@@ -27,7 +27,13 @@ export const PreviewTab = () => {
     return (
         <div className="rounded-[8px] overflow-hidden p-3">
             {userImages.length ? (
-                <Slider images={userImages} name={name} passions={passions} age={123} hasHelpIcon />
+                <SwipeSlider
+                    images={userImages}
+                    name={name}
+                    passions={passions}
+                    age={123}
+                    hasHelpIcon
+                />
             ) : (
                 <div className="h-[85vh] flex items-center justify-center">
                     <p className="text-2xl text-center">No images uploaded yet!</p>

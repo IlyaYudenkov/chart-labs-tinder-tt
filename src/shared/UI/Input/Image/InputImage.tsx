@@ -3,6 +3,8 @@ import { EButtonVariants } from '@/shared/UI/Button/model/button.model';
 import { Button } from '@/shared/UI/Button/ui/Button';
 import PlusIcon from '@/shared/assets/images/Plus/PlusIcon.svg';
 import XMarkSmall from '@/shared/assets/images/XMark/XMarkSmallIcon.svg';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import { setPhotos } from '@/app/store/auth/authSlice';
 
 interface IInputImage {
     selectedImage?: string;
@@ -13,6 +15,10 @@ export const InputImage = ({ selectedImage, onImageChange }: IInputImage) => {
     //STATE
     const [previewUrl, setPreviewUrl] = useState<string>('');
     const [isVisible, setIsVisible] = useState<boolean>(false);
+
+    //RTK
+    const { photos } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
 
     //EFFECT
     useEffect(() => {
@@ -43,6 +49,7 @@ export const InputImage = ({ selectedImage, onImageChange }: IInputImage) => {
         setTimeout(() => {
             setPreviewUrl('');
             onImageChange?.(null);
+            dispatch(setPhotos(photos.filter((photo) => photo !== selectedImage)));
         }, 300);
     };
 
