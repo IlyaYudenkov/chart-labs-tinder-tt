@@ -1,10 +1,10 @@
 import { Button } from '@/shared/UI/Button/ui/Button';
 import { useCallback, useEffect, useState } from 'react';
-import { PassionButton } from '../components/PassionButton';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { setCurrentStepIndex } from '@/app/store/step/stepSlice';
 import { setPassions } from '@/app/store/auth/authSlice';
 import { PASSIONS_DATA_ARRAY } from '../data/selectPassions.data';
+import { PassionButton } from '@/entities/Passion';
 
 export const SelectPassions = () => {
     //STATE
@@ -41,8 +41,8 @@ export const SelectPassions = () => {
     const handleSavePassions = useCallback(() => {
         if (selectedPassions.length) {
             dispatch(setPassions(selectedPassions));
-            dispatch(setCurrentStepIndex(currentStepIndex + 1));
-            sessionStorage.setItem('currentStepIndex', String(currentStepIndex + 1));
+            dispatch(setCurrentStepIndex(2));
+            sessionStorage.setItem('currentStepIndex', '2');
         }
     }, [selectedPassions, currentStepIndex, dispatch]);
 

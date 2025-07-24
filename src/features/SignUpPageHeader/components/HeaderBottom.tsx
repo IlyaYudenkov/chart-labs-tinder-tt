@@ -11,7 +11,10 @@ export const HeaderBottom = () => {
     const dispatch = useAppDispatch();
 
     //FUNCTION
-    const updateStepIndex = (index: number) => dispatch(setCurrentStepIndex(index));
+    const updateStepIndex = (index: number) => {
+        dispatch(setCurrentStepIndex(index));
+        sessionStorage.setItem('currentStepIndex', String(index));
+    };
 
     return (
         <div className="px-6 mb-[18px]">
