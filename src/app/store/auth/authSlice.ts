@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IAuthState {
     name: string;
+    age: string;
     passions: string[];
     photos: string[];
     isAuth: boolean;
@@ -9,6 +10,7 @@ interface IAuthState {
 
 const initialState: IAuthState = {
     name: '',
+    age: '',
     passions: [],
     photos: [],
     isAuth: false,
@@ -20,6 +22,9 @@ const authSlice = createSlice({
     reducers: {
         setName(state, action: PayloadAction<string>) {
             state.name = action.payload;
+        },
+        setAge(state, action: PayloadAction<string>) {
+            state.age = action.payload;
         },
         setPassions(state, action: PayloadAction<string[]>) {
             state.passions = action.payload;
@@ -33,5 +38,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { setName, setPassions, setPhotos } = authSlice.actions;
+export const { setName, setAge, setPassions, setPhotos } = authSlice.actions;
 export const AuthReducer = authSlice.reducer;
