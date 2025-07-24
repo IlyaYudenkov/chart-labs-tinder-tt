@@ -40,39 +40,39 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
                 updatedImages[index] = file;
                 setImages?.(updatedImages);
                 setIsWarning(false);
+                sessionStorage.setItem('images', JSON.stringify(updatedImages));
             } else {
                 const reader = new FileReader();
                 reader.onloadend = () => {
                     const base64 = reader.result as string;
                     updatedImages[index] = base64;
-                    const filtered = updatedImages.filter((img) => img && img.trim() !== '');
-                    setImages?.(filtered);
-                    sessionStorage.setItem('images', JSON.stringify(filtered));
+                    setImages?.(updatedImages);
                     setIsWarning(false);
+                    sessionStorage.setItem('images', JSON.stringify(updatedImages));
                 };
                 reader.readAsDataURL(file);
             }
         } else {
             updatedImages[index] = '';
-            const filtered = updatedImages.filter((img) => img && img.trim() !== '');
-            setImages?.(filtered);
-            sessionStorage.setItem('images', JSON.stringify(filtered));
-            if (!filtered.length) setIsWarning(true);
+            setImages?.(updatedImages);
+            sessionStorage.setItem('images', JSON.stringify(updatedImages));
+
+            setIsWarning(!filteredImages.length);
         }
     };
 
     const handleAddMedia = () => {
         if (!filteredImages.length) return setIsWarning(true);
-        sessionStorage.setItem('images', JSON.stringify(filteredImages));
+        sessionStorage.setItem('images', JSON.stringify(images));
         setIsOpenModal(true);
-        dispatch(setPhotos(filteredImages));
+        dispatch(setPhotos(images));
         setTimeout(() => setIsOpenModal(false), 1000);
     };
 
     return (
         <div>
             <div className="flex flex-wrap gap-2 justify-center max-w-100 mx-auto px-2 py-2.5">
-                {[...Array(9)].map((_, index) => (
+                {images.map((_, index) => (
                     <Input.Image
                         key={index}
                         selectedImage={images[index] || null}
