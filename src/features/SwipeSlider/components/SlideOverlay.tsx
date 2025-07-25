@@ -4,14 +4,24 @@ import { SlideActionBar } from './SlideActionBar';
 import { PassionItem } from '@/entities/Passion/components/PassionItem/PassionItem';
 
 interface ISlideOverlay {
+    userId: number;
     name: string;
-    age: number;
+    age: string;
     isVerified?: boolean;
     hasHelpIcon?: boolean;
+    hasActionBar?: boolean;
     passions?: string[];
 }
 
-export const SlideOverlay = ({ name, age, isVerified, passions, hasHelpIcon }: ISlideOverlay) => {
+export const SlideOverlay = ({
+    userId,
+    name,
+    age,
+    isVerified,
+    passions,
+    hasHelpIcon,
+    hasActionBar,
+}: ISlideOverlay) => {
     return (
         <div className="flex flex-col absolute bottom-0 left-0 w-full ">
             <div className="flex flex-col gap-10 p-4 bg-gradient-to-t from-secondary via-transparent to-transparent">
@@ -34,7 +44,7 @@ export const SlideOverlay = ({ name, age, isVerified, passions, hasHelpIcon }: I
                     </div>
                 )}
             </div>
-            <SlideActionBar />
+            {hasActionBar && <SlideActionBar userId={userId} />}
         </div>
     );
 };

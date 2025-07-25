@@ -1,35 +1,25 @@
-import { useRef, useState } from 'react';
-import { SlideOverlay } from '../components/SlideOverlay';
-import { SlideActionBar } from '../components/SlideActionBar';
+import { IUser } from '@/entities/User/model/user.model';
+import { useMemo, useRef, useState } from 'react';
 import { SliderProgressBars } from '../components/SliderProgressBar';
+import { SlideOverlay } from '../components/SlideOverlay';
 
 interface ISwipeSlider {
-    images?: string[];
-    name?: string;
-    age?: number;
-    passions?: string[];
-    isVerified?: boolean;
+    users?: IUser[];
     hasHelpIcon?: boolean;
     hasActionBar?: boolean;
+    hasProgressBar?: boolean;
 }
 
 export const SwipeSlider = ({
-    images,
-    name,
-    age,
-    passions,
-    isVerified,
+    users = [],
     hasHelpIcon,
     hasActionBar,
+    hasProgressBar,
 }: ISwipeSlider) => {
-    //STATE
-    const [index, setIndex] = useState<number>(0);
-
-    //REF
+    const [index, setIndex] = useState(0);
     const startX = useRef(0);
     const endX = useRef(0);
 
-    //FUNCTION
     const handleTouchStart = (e: React.TouchEvent) => {
         startX.current = e.touches[0].clientX;
     };
@@ -40,20 +30,22 @@ export const SwipeSlider = ({
 
     const handleTouchEnd = () => {
         const distance = startX.current - endX.current;
-        if (distance > 50 && index < images.length - 1) {
+        if (distance > 50 && index < users.length - 1) {
             setIndex((prev) => prev + 1);
         } else if (distance < -50 && index > 0) {
             setIndex((prev) => prev - 1);
         }
     };
 
+    const currentUser = useMemo(() => users[index], [users, index]);
+
     return (
         <div className="relative w-full h-screen max-h-[670px] overflow-hidden rounded-[8px] bg-primary touch-pan-x">
-            {images[index] && (
+            {currentUser && (
                 <div
                     className="absolute inset-0 z-0"
                     style={{
-                        backgroundImage: `url(${images[index]})`,
+                        backgroundImage: `url(${currentUser.photoUrl})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         filter: 'blur(24px)',
@@ -64,12 +56,9 @@ export const SwipeSlider = ({
 
             <div className="absolute inset-0 bg-black/30 z-0" />
 
-            <SliderProgressBars
-                activeIndex={index}
-                total={images.length}
-                className="h-1 absolute top-0 left-0 w-full px-2.5 pt-1 z-10"
-                classNameEl="h-1"
-            />
+            {hasProgressBar && (
+                <SliderProgressBars activeIndex={index} total={currentUser.photoUrl.length} />
+            )}
 
             <div
                 className="flex h-full transition-transform duration-300 ease-in-out relative z-10"
@@ -78,26 +67,28 @@ export const SwipeSlider = ({
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
             >
-                {images.map((src, i) => (
+                {users.map((user, i) => (
                     <div
-                        key={i}
+                        key={user.id}
                         className="flex-none w-full h-full flex items-center justify-center relative overflow-hidden"
                     >
                         <img
-                            src={src}
+                            src={user.photoUrl}
                             alt={`slide-${i}`}
                             className="w-full h-full object-contain max-w-full max-h-full rounded-[8px]"
                         />
+
                         <SlideOverlay
-                            name={name}
-                            age={age}
-                            passions={passions}
-                            isVerified={isVerified}
+                            userId={currentUser.id}
+                            name={currentUser.name}
+                            age={currentUser.age}
+                            passions={currentUser.passions}
+                            isVerified={currentUser.isVerified}
                             hasHelpIcon={hasHelpIcon}
+                            hasActionBar={hasActionBar}
                         />
                     </div>
                 ))}
-                {hasActionBar && <SlideActionBar />}
             </div>
         </div>
     );

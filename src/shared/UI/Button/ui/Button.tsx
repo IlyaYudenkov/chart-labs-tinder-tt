@@ -4,6 +4,7 @@ import { cls } from '@/shared/lib/classes.lib';
 
 interface IButton {
     className?: string;
+    classNameLink?: string;
     variant?: EButtonVariants;
     href?: string;
     title?: string;
@@ -20,6 +21,7 @@ interface IButton {
 
 export const Button = ({
     className,
+    classNameLink,
     variant = EButtonVariants.gradient,
     href,
     title,
@@ -56,5 +58,9 @@ export const Button = ({
 
     if (!href) return html;
 
-    return <Link to={!disabled ? href : '...'}>{html}</Link>;
+    return (
+        <Link className={classNameLink} to={!disabled ? href : '...'}>
+            {html}
+        </Link>
+    );
 };

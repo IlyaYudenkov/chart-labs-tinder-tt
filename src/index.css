@@ -41,6 +41,10 @@ img{
     max-width: fit-content;
 }
 
+button, label{
+    cursor: pointer;
+}
+
 @layer utilities {
     .bg-gradient-red-to-orange {
         @apply bg-gradient-to-r from-[#FD267A] to-[#FF6036];

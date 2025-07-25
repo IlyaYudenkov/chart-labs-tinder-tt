@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { setCurrentStepIndex } from '@/app/store/step/stepSlice';
 import { setPassions } from '@/app/store/auth/authSlice';
-import { PASSIONS_DATA_ARRAY } from '../data/selectPassions.data';
 import { PassionButton } from '@/entities/Passion';
+import { PASSIONS_DATA_ARRAY } from '@/entities/Passion/data/passions.data';
 
 export const SelectPassions = () => {
     //STATE
@@ -55,7 +55,7 @@ export const SelectPassions = () => {
                 </p>
             </div>
 
-            <div className="flex flex-wrap gap-2 justify-center px-6 mb-5">
+            <div className="flex flex-wrap gap-2 justify-center px-6 mb-12">
                 {PASSIONS_DATA_ARRAY.map((el) => (
                     <PassionButton
                         key={el}
@@ -66,7 +66,7 @@ export const SelectPassions = () => {
                     />
                 ))}
             </div>
-            <div className="fixed flex justify-center bottom-0 p-6 bg-primary w-full border-t border-gray-blue-muted">
+            <div className="fixed flex justify-center bottom-8 p-6 bg-primary w-full border-t border-gray-blue-muted">
                 <Button
                     title={`Continue (${selectedPassions.length}/5)`}
                     className="w-full"
