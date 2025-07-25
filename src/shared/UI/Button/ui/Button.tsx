@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { EButtonType, EButtonVariants } from '../model/button.model';
+import { EButtonType, EButtonVariants, IIconSizes } from '../model/button.model';
 import { cls } from '@/shared/lib/classes.lib';
 
 interface IButton {
@@ -10,6 +10,7 @@ interface IButton {
     disabled?: boolean;
     dataHover?: string;
     icon?: string;
+    iconSizes?: IIconSizes;
     type?: EButtonType;
 
     onClick?: () => void;
@@ -25,6 +26,7 @@ export const Button = ({
     disabled,
     dataHover,
     icon,
+    iconSizes,
     type = EButtonType.SUBMIT,
 
     onClick,
@@ -46,7 +48,9 @@ export const Button = ({
             disabled={disabled}
         >
             {title}
-            {icon && <img src={icon} alt="icon" />}
+            {icon && (
+                <img width={iconSizes?.width} height={iconSizes?.height} src={icon} alt="icon" />
+            )}
         </button>
     );
 
