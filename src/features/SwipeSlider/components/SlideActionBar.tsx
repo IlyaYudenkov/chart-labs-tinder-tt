@@ -31,7 +31,7 @@ export const SlideActionBar = ({
                 label: 'Rewind',
                 iconSizes: { width: 46, height: 46 },
                 onClick: onRewind,
-                animationClass: 'focus:rotate-[-90deg]',
+                isPressedStyle: 'rotate-[-90deg]',
             },
             {
                 id: 2,
@@ -39,7 +39,7 @@ export const SlideActionBar = ({
                 label: 'Dislike',
                 iconSizes: { width: 58, height: 58 },
                 onClick: onDislike,
-                animationClass: 'focus:rotate-[-360deg] duration-500',
+                isPressedStyle: 'rotate-[-360deg] duration-500',
             },
             {
                 id: 3,
@@ -47,7 +47,7 @@ export const SlideActionBar = ({
                 label: 'Superlike',
                 iconSizes: { width: 46, height: 46 },
                 onClick: onSuperlike,
-                animationClass: 'focus:animate-superlikeAnimation',
+                isPressedStyle: 'scale-200',
             },
             {
                 id: 4,
@@ -55,7 +55,7 @@ export const SlideActionBar = ({
                 label: 'Like',
                 iconSizes: { width: 58, height: 58 },
                 onClick: onLike,
-                animationClass: 'focus:animate-ping',
+                isPressedStyle: 'animate-ping',
             },
             {
                 id: 5,
@@ -63,7 +63,7 @@ export const SlideActionBar = ({
                 label: 'Boost',
                 iconSizes: { width: 40, height: 40 },
                 onClick: () => {},
-                animationClass: '',
+                isPressedStyle: '',
             },
         ];
     }, [userId]);
@@ -78,7 +78,8 @@ export const SlideActionBar = ({
                         onClick={btn.onClick}
                         iconSizes={btn.iconSizes}
                         variant={EButtonVariants.DEFAULT}
-                        className={`duration-200 ease-in-out active:scale-90 ${btn.animationClass}`}
+                        className="duration-200 ease-in-out active:scale-90"
+                        isPressedStyle={btn.isPressedStyle}
                     />
                 ))}
             </div>

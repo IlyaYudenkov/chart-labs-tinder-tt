@@ -94,7 +94,7 @@ export const UsersCardsSwipeSlider = ({ users = [] }: IUsersCardsSwipeSlider) =>
                 setOffset(0);
                 setTransition(false);
                 setIsRewinding(false);
-            }, 250);
+            }, 350);
 
             mutate({ userId: currentUser.id, action });
         },
