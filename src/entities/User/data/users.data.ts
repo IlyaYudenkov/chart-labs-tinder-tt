@@ -39,12 +39,23 @@ export const USERS_DATA_ARRAY: IUser[] = [
         id: 4,
         name: 'Elena Belova',
         age: '27',
-        photoUrl:
-            'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/8/8e/Yelena_Belova_Infobox.jpg',
+        photoUrl: 'https://burninghut.ru/wp-content/uploads/2024/09/Florens-Pyu.jpg',
         isVerified: false,
         liked: false,
         disliked: false,
         superLiked: false,
         passions: ['Hot yoga', 'Spa', 'Meditation'],
+    },
+    {
+        id: 5,
+        name: 'Gwen Stacy',
+        age: '20',
+        photoUrl:
+            'https://i.simpalsmedia.com/point.md/news/thumbnails/large/8c53364bdb9dc90198b70caa9edc31dd.jpg',
+        isVerified: false,
+        liked: false,
+        disliked: false,
+        superLiked: false,
+        passions: ['Skincare', 'Spa', 'Meditation'],
     },
 ];

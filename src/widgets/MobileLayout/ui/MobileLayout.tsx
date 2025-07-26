@@ -5,7 +5,7 @@ interface IMobileLayout extends PropsWithChildren {}
 
 export const MobileLayout = ({ children }: IMobileLayout) => {
     return (
-        <div className="relative pb-[49px] md:pb-0">
+        <div className="relative pb-[49px] md:pb-0 max-h-[100vh]">
             {children}
             <MobileNavbar />
         </div>

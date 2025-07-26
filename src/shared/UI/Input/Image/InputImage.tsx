@@ -82,7 +82,7 @@ export const InputImage = ({ selectedImage, onImageChange }: IInputImage) => {
 
             <Button
                 icon={previewUrl ? XMarkSmall : PlusIcon}
-                variant={previewUrl ? EButtonVariants.xMark : EButtonVariants.plus}
+                variant={previewUrl ? EButtonVariants.X_MARK : EButtonVariants.PLUS}
                 onClick={previewUrl ? handleClear : undefined}
                 className="absolute bottom-0 right-[-4px] max-w-7 max-h-7"
             />

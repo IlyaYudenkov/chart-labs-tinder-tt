@@ -14,7 +14,16 @@
     font-style: normal;
 }
 
+:root{
+    --bg-gradient-red-to-orange: linear-gradient(to right, #FD267A, #FF6036);
+
+}
+
 @theme {
+    --breakpoint-xs: 320px;
+    --breakpoint-s: 380px;
+
+
     --color-primary: #ffffff;
     --color-secondary: #111418;
 
@@ -31,6 +40,20 @@
     --color-bright-red: #FF4458;
 
     --font-size-28: 28px;
+
+    --animate-superlikeAnimation: superlikeAnimation 2.2s ease-in-out;
+
+    @keyframes superlikeAnimation {
+    0% {
+        transform: scale(1) translateY(0) rotateY(0deg);
+    }
+    50% {
+        transform: scale(1.2) translateY(-300px) rotateY(180deg); 
+    }
+    100% {
+        transform: scale(1) translateY(0) rotateY(360deg);
+    }
+}
 }
 
 html {

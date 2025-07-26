@@ -1,18 +1,12 @@
+import { ISelfUser } from '@/entities/User/model/user.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IAuthState {
-    name: string;
-    age: string;
-    passions: string[];
-    photos: string[];
-    isAuth: boolean;
-}
-
-const initialState: IAuthState = {
+const initialState: ISelfUser = {
     name: '',
     age: '',
     passions: [],
     photos: [],
+    isVerified: false,
     isAuth: false,
 };
 
@@ -32,11 +26,15 @@ const authSlice = createSlice({
         setPhotos(state, action: PayloadAction<string[]>) {
             state.photos = action.payload;
         },
+        setIsVerified(state, action: PayloadAction<boolean>) {
+            state.isVerified = action.payload;
+        },
         setIsAuth(state, action: PayloadAction<boolean>) {
             state.isAuth = action.payload;
         },
     },
 });
 
-export const { setName, setAge, setPassions, setPhotos, setIsAuth } = authSlice.actions;
+export const { setName, setAge, setPassions, setPhotos, setIsVerified, setIsAuth } =
+    authSlice.actions;
 export const AuthReducer = authSlice.reducer;

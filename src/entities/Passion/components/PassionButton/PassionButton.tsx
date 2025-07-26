@@ -12,7 +12,7 @@ export const PassionButton = ({ label, isSelected, onClick, disabled }: IPassion
     return (
         <Button
             type={EButtonType.BUTTON}
-            variant={EButtonVariants.default}
+            variant={EButtonVariants.DEFAULT}
             onClick={onClick}
             title={label}
             disabled={disabled}

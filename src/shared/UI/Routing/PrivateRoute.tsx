@@ -5,6 +5,7 @@ import { Modal } from '@/shared/UI/Modal';
 import { Button } from '../Button/ui/Button';
 import { PUBLIC_PAGES } from '@/app/routes/routes';
 import { setIsAuth } from '@/app/store/auth/authSlice';
+import { AUTH_SS_KEY } from '@/shared/data/ssKeys.data';
 
 interface IPrivateRoute extends PropsWithChildren {}
 
@@ -12,6 +13,8 @@ export const PrivateRoute = ({ children }: IPrivateRoute) => {
     //RTK
     const { isAuth: isAuthRTK } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
+
+    //NAVIGATE
     const navigate = useNavigate();
 
     //STATE
@@ -19,10 +22,13 @@ export const PrivateRoute = ({ children }: IPrivateRoute) => {
 
     //EFFECT
     useEffect(() => {
-        const isAuth = JSON.parse(sessionStorage.getItem('auth') || 'false');
+        const isAuth = JSON.parse(sessionStorage.getItem(AUTH_SS_KEY) || 'false');
         dispatch(setIsAuth(isAuth));
         setIsAuthInitialized(true);
-    }, [dispatch]);
+        if (isAuth) {
+            sessionStorage.getItem('');
+        }
+    }, []);
 
     if (!isAuthInitialized) return null;
 

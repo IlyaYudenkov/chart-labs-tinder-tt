@@ -4,13 +4,17 @@ import { SlideActionBar } from './SlideActionBar';
 import { PassionItem } from '@/entities/Passion/components/PassionItem/PassionItem';
 
 interface ISlideOverlay {
-    userId: number;
+    userId?: number;
     name: string;
     age: string;
     isVerified?: boolean;
     hasHelpIcon?: boolean;
-    hasActionBar?: boolean;
+    hasPassions?: boolean;
     passions?: string[];
+    onLike?: () => void;
+    onDislike?: () => void;
+    onSuperlike?: () => void;
+    onRewind?: () => void;
 }
 
 export const SlideOverlay = ({
@@ -18,25 +22,28 @@ export const SlideOverlay = ({
     name,
     age,
     isVerified,
+    hasPassions,
     passions,
     hasHelpIcon,
-    hasActionBar,
+    onLike,
+    onDislike,
+    onSuperlike,
+    onRewind,
 }: ISlideOverlay) => {
     return (
         <div className="flex flex-col absolute bottom-0 left-0 w-full ">
             <div className="flex flex-col gap-10 p-4 bg-gradient-to-t from-secondary via-transparent to-transparent">
                 <div className="flex justify-between">
                     <div className="flex gap-3">
-                        <p className="text-gray-blue text-[34px] font-bold">
+                        <p className="text-primary text-[32px] font-bold">
                             {name}&nbsp;
-                            <span className="text-gray-blue text-2xl font-normal ">{age}</span>
+                            <span className="text-primary text-2xl font-normal ">{age}</span>
                         </p>
                         {isVerified && <img src={VerifiedIcon} alt="verified" />}
                     </div>
                     {hasHelpIcon && <img src={HelpIcon} alt="help" />}
                 </div>
-
-                {!!passions.length && (
+                {hasPassions && !!passions?.length && (
                     <div className="flex flex-wrap gap-1 ">
                         {passions.map((passion) => (
                             <PassionItem key={passion} label={passion} />
@@ -44,7 +51,15 @@ export const SlideOverlay = ({
                     </div>
                 )}
             </div>
-            {hasActionBar && <SlideActionBar userId={userId} />}
+            {userId && (
+                <SlideActionBar
+                    userId={userId}
+                    onDislike={onDislike}
+                    onLike={onLike}
+                    onRewind={onRewind}
+                    onSuperlike={onSuperlike}
+                />
+            )}
         </div>
     );
 };

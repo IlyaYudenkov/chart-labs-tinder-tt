@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@/app/store';
 import { setIsAuth, setPhotos } from '@/app/store/auth/authSlice';
+import { AUTH_SS_KEY, PHOTOS_SS_KEY } from '@/shared/data/ssKeys.data';
 import { Button } from '@/shared/UI/Button/ui/Button';
 import { Input } from '@/shared/UI/Input/Input';
 import { Modal } from '@/shared/UI/Modal';
@@ -20,12 +21,12 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
 
     //MEMO
     const filteredImages = useMemo(() => {
-        return (images ?? []).filter((img) => img !== null && img !== '');
+        return (images ?? []).filter((img) => img !== null && img !== '' && img !== undefined);
     }, [images]);
 
     // EFFECT
     useEffect(() => {
-        const storedImages = JSON.parse(sessionStorage.getItem('images') || '[]');
+        const storedImages = JSON.parse(sessionStorage.getItem(PHOTOS_SS_KEY) || '[]');
         if (storedImages.length > 0) {
             dispatch(setPhotos(storedImages));
             setImages(storedImages);
@@ -41,7 +42,7 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
                 updatedImages[index] = file;
                 setImages?.(updatedImages);
                 setIsWarning(false);
-                sessionStorage.setItem('images', JSON.stringify(updatedImages));
+                sessionStorage.setItem(PHOTOS_SS_KEY, JSON.stringify(updatedImages));
             } else {
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -49,31 +50,31 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
                     updatedImages[index] = base64;
                     setImages?.(updatedImages);
                     setIsWarning(false);
-                    sessionStorage.setItem('images', JSON.stringify(updatedImages));
+                    sessionStorage.setItem(PHOTOS_SS_KEY, JSON.stringify(updatedImages));
                 };
                 reader.readAsDataURL(file);
             }
         } else {
             updatedImages[index] = '';
             setImages?.(updatedImages);
-            sessionStorage.setItem('images', JSON.stringify(updatedImages));
+            sessionStorage.setItem(PHOTOS_SS_KEY, JSON.stringify(updatedImages));
             setIsWarning(!filteredImages.length);
         }
     };
 
     const handleAddMedia = () => {
         if (!filteredImages.length) return setIsWarning(true);
-        sessionStorage.setItem('images', JSON.stringify(images));
+        sessionStorage.setItem(PHOTOS_SS_KEY, JSON.stringify(images));
         setIsOpenModal(true);
         dispatch(setPhotos(images));
-        sessionStorage.setItem('auth', 'true');
+        sessionStorage.setItem(AUTH_SS_KEY, 'true');
         dispatch(setIsAuth(true));
         setTimeout(() => setIsOpenModal(false), 1000);
     };
 
     return (
         <div>
-            <div className="flex flex-wrap gap-2 justify-center max-w-100 mx-auto px-2 py-2.5">
+            <div className="flex flex-wrap gap-2 justify-center max-w-100 mx-auto px-2 py-2.5 xs:h-[284px] s:h-full overflow-y-scroll">
                 {images.map((_, index) => (
                     <Input.Image
                         key={index}

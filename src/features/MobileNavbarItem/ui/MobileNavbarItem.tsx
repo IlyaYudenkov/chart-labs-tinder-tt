@@ -12,7 +12,7 @@ export const MobileNavbarItem = ({ count, icon, href }: IMobileNavbarItem) => {
     return (
         <div className="relative">
             <Button
-                variant={EButtonVariants.default}
+                variant={EButtonVariants.DEFAULT}
                 icon={icon}
                 href={href}
                 className="p-2 active:scale-70"

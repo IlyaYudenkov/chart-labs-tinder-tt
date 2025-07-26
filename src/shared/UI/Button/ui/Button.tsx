@@ -22,7 +22,7 @@ interface IButton {
 export const Button = ({
     className,
     classNameLink,
-    variant = EButtonVariants.gradient,
+    variant = EButtonVariants.GRADIENT,
     href,
     title,
     disabled,

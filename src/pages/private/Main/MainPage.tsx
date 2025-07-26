@@ -1,15 +1,30 @@
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import { setUsers } from '@/app/store/users/usersSlice';
 import { useUsers } from '@/entities/User/api/users.api';
-import { SwipeSlider } from '@/features/SwipeSlider';
+import { UsersCardsSwipeSlider } from '@/features/SwipeSlider';
+import { Loader } from '@/shared/UI/Loader';
+import { useEffect } from 'react';
 
 export const MainPage = () => {
     //TANSTACK
     const { data: users, isLoading } = useUsers();
 
-    if (isLoading) return <span>Loading...</span>;
+    //RTK
+    const { isUsersLoaded } = useAppSelector((state) => state.users);
+    const dispatch = useAppDispatch();
+
+    //EFFECT
+    useEffect(() => {
+        if (!isUsersLoaded && users) {
+            dispatch(setUsers(users));
+        }
+    }, [users, isUsersLoaded]);
+
+    if (isLoading || !isUsersLoaded) return <Loader />;
 
     return (
-        <main>
-            <SwipeSlider users={users} hasActionBar />
+        <main className="mt-12 h-[calc(92vh-50px)] overflow-hidden">
+            <UsersCardsSwipeSlider users={users} />
         </main>
     );
 };

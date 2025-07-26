@@ -1,76 +1,70 @@
 import { Button } from '@/shared/UI/Button/ui/Button';
-import { useCallback, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/app/store';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from '@/app/store';
 import { setCurrentStepIndex } from '@/app/store/step/stepSlice';
 import { setPassions } from '@/app/store/auth/authSlice';
 import { PassionButton } from '@/entities/Passion';
 import { PASSIONS_DATA_ARRAY } from '@/entities/Passion/data/passions.data';
+import { CURRENT_STEP_INDEX_SS_KEY, PASSIONS_SS_KEY } from '@/shared/data/ssKeys.data';
 
 export const SelectPassions = () => {
     //STATE
     const [selectedPassions, setSelectedPassions] = useState<string[]>([]);
 
     //RTK
-    const { currentStepIndex } = useAppSelector((state) => state.step);
-    const { passions } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
 
     //EFFECT
     useEffect(() => {
-        const storedPassions = sessionStorage.getItem('passions');
-        if (storedPassions) {
-            setSelectedPassions(JSON.parse(storedPassions));
-        } else if (passions) {
-            setSelectedPassions(passions);
+        const stored = sessionStorage.getItem(PASSIONS_SS_KEY);
+        if (stored) {
+            setSelectedPassions(JSON.parse(stored));
+            dispatch(setPassions(JSON.parse(stored)));
         }
-    }, [passions]);
+    }, []);
 
-    useEffect(() => {
-        if (selectedPassions.length > 0) {
-            sessionStorage.setItem('passions', JSON.stringify(selectedPassions));
-        }
-    }, [selectedPassions]);
-
-    //FUNCTIONS
-    const togglePassion = useCallback((passion: string) => {
+    //FUNCTION
+    const togglePassion = (passion: string) => {
         setSelectedPassions((prev) =>
             prev.includes(passion) ? prev.filter((p) => p !== passion) : [...prev, passion],
         );
-    }, []);
+    };
 
-    const handleSavePassions = useCallback(() => {
-        if (selectedPassions.length) {
-            dispatch(setPassions(selectedPassions));
-            dispatch(setCurrentStepIndex(2));
-            sessionStorage.setItem('currentStepIndex', '2');
-        }
-    }, [selectedPassions, currentStepIndex, dispatch]);
+    const handleContinue = () => {
+        if (!selectedPassions.length) return;
+        sessionStorage.setItem(PASSIONS_SS_KEY, JSON.stringify(selectedPassions));
+
+        dispatch(setPassions(selectedPassions));
+        dispatch(setCurrentStepIndex(2));
+        sessionStorage.setItem(CURRENT_STEP_INDEX_SS_KEY, '2');
+    };
 
     return (
-        <div className="flex flex-col gap-4 pb-7">
-            <div className="flex flex-col gap-[7px] pt-0 pb-6 px-6 border-b border-gray-blue-muted">
-                <h2 className="text-secondary text-[28px] font-bold">Passions</h2>
+        <div className="flex flex-col pb-24">
+            <div className="flex flex-col gap-2 px-6 pt-6 pb-4 border-b border-gray-200">
+                <h2 className="text-[28px] font-bold text-secondary">Passions</h2>
                 <p className="text-dark-gray-blue">
                     Let everyone know what you’re passionate about, by adding it to your profile.
                 </p>
             </div>
 
-            <div className="flex flex-wrap gap-2 justify-center px-6 mb-12">
-                {PASSIONS_DATA_ARRAY.map((el) => (
+            <div className="flex flex-wrap justify-center gap-2 px-6 pb-[90px] mt-6 overflow-y-auto xs:max-h-[400px] s:max-h-[600px] ">
+                {PASSIONS_DATA_ARRAY.map((item) => (
                     <PassionButton
-                        key={el}
-                        label={el}
-                        disabled={selectedPassions.length >= 5 && !selectedPassions.includes(el)}
-                        isSelected={selectedPassions.includes(el)}
-                        onClick={() => togglePassion(el)}
+                        key={item}
+                        label={item}
+                        isSelected={selectedPassions.includes(item)}
+                        disabled={selectedPassions.length >= 5 && !selectedPassions.includes(item)}
+                        onClick={() => togglePassion(item)}
                     />
                 ))}
             </div>
-            <div className="fixed flex justify-center bottom-8 p-6 bg-primary w-full border-t border-gray-blue-muted">
+
+            <div className="fixed bottom-12 w-full p-6 bg-white border-t border-gray-200">
                 <Button
                     title={`Continue (${selectedPassions.length}/5)`}
                     className="w-full"
-                    onClick={handleSavePassions}
+                    onClick={handleContinue}
                 />
             </div>
         </div>
