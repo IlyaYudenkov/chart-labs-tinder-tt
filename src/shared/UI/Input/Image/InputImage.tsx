@@ -65,24 +65,24 @@ export const InputImage = ({ selectedImage, onImageChange }: IInputImage) => {
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                className={`absolute bottom-0 right-0 w-4 opacity-0 cursor-pointer ${previewUrl ? '-z-10' : 'z-10'}`}
+                className={`absolute inset-0 w-full h-full opacity-0 cursor-pointer ${previewUrl ? '-z-10' : 'z-10'}`}
             />
 
             {previewUrl && (
                 <div
-                    className={`flex justify-center absolute inset-0 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                    className={`flex justify-center items-center absolute inset-0 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 >
                     <img
                         src={previewUrl}
                         alt="preview"
-                        className="w-full h-full object-cover rounded-[8px]"
+                        className="w-full h-full object-contain rounded-[8px]"
                     />
                 </div>
             )}
 
             <Button
                 icon={previewUrl ? XMarkSmall : PlusIcon}
-                variant={previewUrl ? EButtonVariants.xMark : EButtonVariants.plus}
+                variant={previewUrl ? EButtonVariants.X_MARK : EButtonVariants.PLUS}
                 onClick={previewUrl ? handleClear : undefined}
                 className="absolute bottom-0 right-[-4px] max-w-7 max-h-7"
             />

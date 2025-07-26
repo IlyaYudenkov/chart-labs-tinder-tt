@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { StepReducer } from './step/stepSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { AuthReducer } from './auth/authSlice';
+import { UsersReducer } from './users/usersSlice';
 
 export const store = configureStore({
     reducer: {
         step: StepReducer,
         auth: AuthReducer,
+        users: UsersReducer,
     },
 });
 

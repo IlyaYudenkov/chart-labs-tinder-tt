@@ -1,5 +1,6 @@
 import { useAppSelector } from '@/app/store';
-import { SwipeSlider } from '@/features/SwipeSlider';
+import { DefaultSwipeSlider } from '@/features/SwipeSlider';
+import { PHOTOS_SS_KEY } from '@/shared/data/ssKeys.data';
 import { useEffect, useMemo, useState } from 'react';
 
 export const PreviewTab = () => {
@@ -7,10 +8,13 @@ export const PreviewTab = () => {
     const [userImages, setUserImages] = useState<string[]>([]);
 
     // RTK
-    const { photos, name, passions } = useAppSelector((state) => state.auth);
+    const { photos, name, age, isVerified } = useAppSelector((state) => state.auth);
 
     //MEMO
-    const parsedImagesSS = useMemo(() => JSON.parse(sessionStorage.getItem('images') || '[]'), []);
+    const parsedImagesSS = useMemo(
+        () => JSON.parse(sessionStorage.getItem(PHOTOS_SS_KEY) || '[]'),
+        [],
+    );
 
     // EFFECT
     useEffect(() => {
@@ -23,15 +27,14 @@ export const PreviewTab = () => {
         const filteredImages = finalImages.filter((img) => img && img.trim() !== '');
         setUserImages(filteredImages);
     }, [photos]);
-
     return (
-        <div className="rounded-[8px] overflow-hidden p-3">
+        <div className="rounded-[8px] p-3">
             {userImages.length ? (
-                <SwipeSlider
+                <DefaultSwipeSlider
+                    age={age}
                     images={userImages}
                     name={name}
-                    passions={passions}
-                    age={123}
+                    isVerified={isVerified}
                     hasHelpIcon
                 />
             ) : (

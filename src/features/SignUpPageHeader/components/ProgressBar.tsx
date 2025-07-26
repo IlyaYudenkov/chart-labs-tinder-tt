@@ -1,28 +1,41 @@
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { setIsAuth } from '@/app/store/auth/authSlice';
-import { useEffect, useMemo } from 'react';
+import { AUTH_SS_KEY } from '@/shared/data/ssKeys.data';
+import { useEffect, useMemo, useState } from 'react';
 
-const totalSteps = 3;
+const TOTAL_STEPS = 3;
 
 export const ProgressBar = () => {
+    //STATE
+    const [hasMounted, setHasMounted] = useState<boolean>(false);
+
     //RTK
     const { currentStepIndex } = useAppSelector((state) => state.step);
     const { photos } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
 
     //MEMO
+    const hasUploadedPhotos = useMemo(() => photos.some((img) => !!img?.trim()), [photos]);
+
     const progress = useMemo(() => {
-        const hasUploadedPhotos = photos.some((img) => !!img?.trim());
-        return hasUploadedPhotos ? 100 : (currentStepIndex / totalSteps) * 100;
-    }, [photos, currentStepIndex]);
+        return hasUploadedPhotos ? 100 : (currentStepIndex / TOTAL_STEPS) * 100;
+    }, [hasUploadedPhotos, currentStepIndex]);
 
     //EFFECT
     useEffect(() => {
-        if (progress !== 100) {
+        setHasMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!hasMounted || photos.length === 0) return;
+
+        const isIncomplete = !hasUploadedPhotos && currentStepIndex < TOTAL_STEPS;
+
+        if (isIncomplete) {
             dispatch(setIsAuth(false));
-            sessionStorage.setItem('auth', 'false');
+            sessionStorage.setItem(AUTH_SS_KEY, 'false');
         }
-    }, [progress]);
+    }, [hasMounted, hasUploadedPhotos, currentStepIndex, photos.length]);
 
     return (
         <div className="relative w-full h-2 bg-gray-200">

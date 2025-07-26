@@ -9,6 +9,7 @@ import {
     ERROR_ENTER_NAME,
     ERROR_INVALID_AGE,
 } from '@/shared/data/inputError.data';
+import { AGE_SS_KEY, CURRENT_STEP_INDEX_SS_KEY, NAME_SS_KEY } from '@/shared/data/ssKeys.data';
 import { FormEvent, useEffect, useState } from 'react';
 
 export const NameAgeInputForm = () => {
@@ -24,8 +25,8 @@ export const NameAgeInputForm = () => {
 
     //EFFECT
     useEffect(() => {
-        const storedName = sessionStorage.getItem('name');
-        const storedAge = sessionStorage.getItem('age');
+        const storedName = sessionStorage.getItem(NAME_SS_KEY);
+        const storedAge = sessionStorage.getItem(AGE_SS_KEY);
 
         if (storedName) {
             dispatch(setName(storedName));
@@ -53,9 +54,9 @@ export const NameAgeInputForm = () => {
         dispatch(setAge(userAge));
         dispatch(setCurrentStepIndex(1));
 
-        sessionStorage.setItem('name', userName);
-        sessionStorage.setItem('age', userAge);
-        sessionStorage.setItem('currentStepIndex', String(1));
+        sessionStorage.setItem(NAME_SS_KEY, userName);
+        sessionStorage.setItem(AGE_SS_KEY, userAge);
+        sessionStorage.setItem(CURRENT_STEP_INDEX_SS_KEY, String(1));
     };
     return (
         <form className="flex flex-col px-6" onSubmit={handleSaveNameAge}>
