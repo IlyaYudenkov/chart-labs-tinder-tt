@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { EButtonType, EButtonVariants, IIconSizes } from '../model/button.model';
 import { cls } from '@/shared/lib/classes.lib';
+import { useState } from 'react';
 
 interface IButton {
     className?: string;
@@ -13,6 +14,7 @@ interface IButton {
     icon?: string;
     iconSizes?: IIconSizes;
     type?: EButtonType;
+    isPressedStyle?: string;
 
     onClick?: () => void;
     onMouseEnter?: () => void;
@@ -30,17 +32,29 @@ export const Button = ({
     icon,
     iconSizes,
     type = EButtonType.SUBMIT,
+    isPressedStyle,
 
     onClick,
     onMouseEnter,
     onMouseLeave,
 }: IButton) => {
+    //STATE
+    const [isPressed, setIsPressed] = useState<boolean>(false);
+
+    const handleTouchStart = () => {
+        setIsPressed(true);
+    };
+
+    const handleTouchEnd = () => {
+        setIsPressed(false);
+    };
     const html = (
         <button
             className={cls(
                 'flex justify-center items-center duration-200 ease-in-out',
                 className,
                 variant,
+                isPressed && isPressedStyle,
             )}
             onClick={onClick}
             onMouseEnter={onMouseEnter}
@@ -48,6 +62,8 @@ export const Button = ({
             data-hover={dataHover}
             type={type}
             disabled={disabled}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
         >
             {title}
             {icon && (

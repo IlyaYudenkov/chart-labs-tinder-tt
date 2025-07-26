@@ -23,9 +23,9 @@ export const ProfilePage = () => {
 
     if (!users.length) return <Loader />;
     return (
-        <main className="flex flex-col gap-2">
+        <main className="flex flex-col gap-2 pb-12">
             {users.map((user) => (
-                <div key={user.id} className="flex flex-col gap-0.5">
+                <div key={user.id} className="flex flex-col gap-0.5 wrap-break-word">
                     <span>{user.name}</span>
                     <span>{user.age}</span>
                     <span>{user.photoUrl}</span>
