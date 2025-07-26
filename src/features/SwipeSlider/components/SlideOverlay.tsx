@@ -37,7 +37,7 @@ export const SlideOverlay = ({
                     <div className="flex gap-3">
                         <p className="text-primary text-[32px] font-bold select-none">
                             {name}&nbsp;
-                            <span className="text-primary text-2xl font-normal ">{age}</span>
+                            <span className="text-primary text-2xl font-normal">{age}</span>
                         </p>
                         {isVerified && <img src={VerifiedIcon} alt="verified" />}
                     </div>
