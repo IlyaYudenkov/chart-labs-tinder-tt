@@ -73,8 +73,8 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
     };
 
     return (
-        <div>
-            <div className="flex flex-wrap gap-2 justify-center max-w-100 mx-auto px-2 py-2.5 xs:h-[284px] s:h-full overflow-y-scroll">
+        <div className="xs:py-10 md:py-0">
+            <div className="flex flex-wrap gap-2 justify-center max-w-100 mx-auto px-2 py-2.5 ">
                 {images.map((_, index) => (
                     <Input.Image
                         key={index}
