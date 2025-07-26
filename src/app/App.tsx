@@ -1,14 +1,15 @@
-import { BrowserRouter } from 'react-router-dom'
-import { AppRouter } from './routes/AppRouter'
+import { BrowserRouter } from 'react-router-dom';
+import { AppRouter } from './routes/AppRouter';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-function App() {
-
-  return (
-    <BrowserRouter>
-      <AppRouter />
-    </BrowserRouter>
-
-  )
-}
-
-export default App;
+export const App = () => {
+    //TANSTACK
+    const queryClient = new QueryClient();
+    return (
+        <BrowserRouter>
+            <QueryClientProvider client={queryClient}>
+                <AppRouter />
+            </QueryClientProvider>
+        </BrowserRouter>
+    );
+};

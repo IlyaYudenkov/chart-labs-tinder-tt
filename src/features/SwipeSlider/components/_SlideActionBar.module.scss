@@ -1,0 +1,84 @@
+.container {
+    display: flex;
+    padding: 16px 12px;
+    width: 100%;
+    background-color: var(--color-secondary);
+    z-index: 20;
+
+}
+
+.buttonsWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+}
+
+.button {
+    &:active {
+        transform: scale(0.7);
+        transition: transform 0.2s ease-in-out;
+    }
+
+
+
+}
+
+.rewind-button {
+    animation: rotate 0.3s ease-in-out;
+}
+
+.like-button {
+    animation: pulse 1s infinite;
+}
+
+.dislike-button {
+    background-color: #f44336;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.boost-button {
+    animation: flash 0.5s ease-out;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

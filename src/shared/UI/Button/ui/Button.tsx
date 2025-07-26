@@ -1,51 +1,66 @@
-import { Link } from "react-router-dom"
-import { EButtonType } from "../model/button.model"
+import { Link } from 'react-router-dom';
+import { EButtonType, EButtonVariants, IIconSizes } from '../model/button.model';
+import { cls } from '@/shared/lib/classes.lib';
 
 interface IButton {
-    href?: string
-    title?: string,
-    disabled?: boolean
-    dataHover?: string,
-    icon?: string,
-    type?: EButtonType
+    className?: string;
+    classNameLink?: string;
+    variant?: EButtonVariants;
+    href?: string;
+    title?: string;
+    disabled?: boolean;
+    dataHover?: string;
+    icon?: string;
+    iconSizes?: IIconSizes;
+    type?: EButtonType;
 
-    onClick?: () => void,
-    onMouseEnter?: () => void
-    onMouseLeave?: () => void
+    onClick?: () => void;
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void;
 }
 
-
 export const Button = ({
+    className,
+    classNameLink,
+    variant = EButtonVariants.GRADIENT,
     href,
     title,
     disabled,
     dataHover,
     icon,
+    iconSizes,
     type = EButtonType.SUBMIT,
 
     onClick,
     onMouseEnter,
-    onMouseLeave
+    onMouseLeave,
 }: IButton) => {
     const html = (
         <button
-            className={!icon ? 'bg-gradient-to-r from-[#FD267A] to-[#FF6036] rounded-[22px] p-2 font-bold text-primary' : ''}
+            className={cls(
+                'flex justify-center items-center duration-200 ease-in-out',
+                className,
+                variant,
+            )}
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             data-hover={dataHover}
             type={type}
+            disabled={disabled}
         >
             {title}
-            {icon && <img src={icon} alt="icon"/>}
+            {icon && (
+                <img width={iconSizes?.width} height={iconSizes?.height} src={icon} alt="icon" />
+            )}
         </button>
-    )
+    );
 
     if (!href) return html;
 
     return (
-        <Link to={!disabled ? href : '...'}>
+        <Link className={classNameLink} to={!disabled ? href : '...'}>
             {html}
         </Link>
-    )
-}
+    );
+};

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @font-face {
     font-family: 'Proxima Nova';
@@ -14,17 +14,68 @@
     font-style: normal;
 }
 
-@theme {
-    --color-primary: #FFFFFF;
-    --color-secondary: #111418;
+:root{
+    --bg-gradient-red-to-orange: linear-gradient(to right, #FD267A, #FF6036);
 
-    --color-gray-light: #F0F2F4;
-    --color-gray-blue: #7C8591;
-    --color-dark-gray-blue: #505965;
-
-    --font-size-28: 28px;
 }
 
-html{
+@theme {
+    --breakpoint-xs: 320px;
+    --breakpoint-s: 380px;
+
+
+    --color-primary: #ffffff;
+    --color-secondary: #111418;
+
+    --color-gray-light: #f0f2f4;
+    --color-gray-blue: #7c8591;
+    --color-light-gray-blue: #E9EBEE;
+    --color-dark-gray-blue: #505965;
+    --color-gray-blue-light: #b9bfc8;
+    --color-gray-blue-muted: #d4d8de;
+    --color-dark-gray-blue-muted: #3C444F;
+    --color-steel-gray: #656E7B;
+    --color-graphite: #21262E;
+
+    --color-bright-red: #FF4458;
+
+    --font-size-28: 28px;
+
+    --animate-superlikeAnimation: superlikeAnimation 2.2s ease-in-out;
+
+    @keyframes superlikeAnimation {
+    0% {
+        transform: scale(1) translateY(0) rotateY(0deg);
+    }
+    50% {
+        transform: scale(1.2) translateY(-300px) rotateY(180deg); 
+    }
+    100% {
+        transform: scale(1) translateY(0) rotateY(360deg);
+    }
+}
+}
+
+html {
     font-family: 'Proxima Nova';
+}
+
+img{
+    max-width: fit-content;
+}
+
+button, label{
+    cursor: pointer;
+}
+
+@layer utilities {
+    .bg-gradient-red-to-orange {
+        @apply bg-gradient-to-r from-[#FD267A] to-[#FF6036];
+    }
+}
+
+.bg-gray-blue-disabled {
+    background-color: var(--color-gray-blue-light);
+    color: var(--color-gray-blue-muted);
+    cursor: not-allowed;
 }
