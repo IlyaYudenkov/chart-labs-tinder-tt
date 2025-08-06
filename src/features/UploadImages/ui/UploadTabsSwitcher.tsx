@@ -15,13 +15,13 @@ export const UploadTabsSwitcher = () => {
     const [images, setImages] = useState<string[]>([...Array(9)]);
 
     return (
-        <div>
+        <div className="flex flex-col h-full overflow-hidden">
             <TabSwitcher
                 optionsTab={STEP_PHOTOS_OPTIONS_TAB_ARRAY}
                 selectedOption={selectedTab}
                 setSelectedOption={setSelectedTab}
             />
-            <div className="bg-gray-light">
+            <div className="bg-gray-light h-full overflow-y-auto">
                 {selectedTab === STEP_PHOTOS_EDIT_TAB && (
                     <EditTab images={images} setImages={setImages} />
                 )}

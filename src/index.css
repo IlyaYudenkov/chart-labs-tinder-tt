@@ -24,8 +24,6 @@
     --breakpoint-s: 380px;
 
 
-    --color-primary: #ffffff;
-    --color-secondary: #111418;
 
     --color-gray-light: #f0f2f4;
     --color-gray-blue: #7c8591;
@@ -37,9 +35,13 @@
     --color-steel-gray: #656E7B;
     --color-graphite: #21262E;
 
+    --color-white: #FFFFFF;
+    --color-black: #111418;
+
     --color-bright-red: #FF4458;
 
-    --font-size-28: 28px;
+    --color-primary: var(--color-white)
+    --color-secondary: var(--color-black)
 
     --animate-superlikeAnimation: superlikeAnimation 2.2s ease-in-out;
 

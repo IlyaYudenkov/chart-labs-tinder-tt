@@ -11,11 +11,11 @@ export const TabSwitcher = ({ optionsTab, selectedOption, setSelectedOption }: I
         setSelectedOption(tab);
     };
     return (
-        <div className="w-full flex">
+        <div className="flex w-full">
             {optionsTab.map((opt) => (
                 <button
                     key={opt.id}
-                    className={`w-full py-3 border-b border-gray-blue-muted text-[19px] font-bold 
+                    className={`w-full py-3 border-b border-gray-blue-muted text-[19px] font-bold
                             transition-colors duration-300
                             ${opt.id === 1 ? 'border-r' : ''}
                             ${opt.id === selectedOption.id ? 'text-bright-red' : 'text-steel-gray'}`}

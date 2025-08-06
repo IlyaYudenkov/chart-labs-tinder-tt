@@ -18,7 +18,7 @@ export const HeaderBottom = () => {
     };
 
     return (
-        <div className="px-6 mb-[18px]">
+        <div className="px-6">
             {currentStepIndex === 0 && <Button icon={XMark} variant={EButtonVariants.DEFAULT} />}
             {currentStepIndex > 0 && (
                 <div className="flex justify-between">

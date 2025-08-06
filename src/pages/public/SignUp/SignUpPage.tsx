@@ -1,13 +1,11 @@
 import { SignUpForm } from '@/widgets/SignUpForm';
 import { SignUpPageHeader } from '@/features/SignUpPageHeader';
-import { MobileNavbar } from '@/widgets/MobileNavbar';
 
 export const SignUpPage = () => {
     return (
-        <main className="bg-primary">
+        <main className="flex flex-col h-full overflow-hidden bg-white ">
             <SignUpPageHeader />
             <SignUpForm />
-            <MobileNavbar />
         </main>
     );
 };

@@ -40,27 +40,31 @@ export const SelectPassions = () => {
     };
 
     return (
-        <div className="flex flex-col pb-24">
-            <div className="flex flex-col gap-2 px-6 pt-6 pb-4 border-b border-gray-200">
-                <h2 className="text-[28px] font-bold text-secondary">Passions</h2>
+        <div className="flex flex-col h-full overflow-hidden">
+            <div className="flex flex-col gap-2 px-6 pb-4 border-b border-gray-200">
+                <h2 className="text-[28px] font-bold text-black">Passions</h2>
                 <p className="text-dark-gray-blue">
                     Let everyone know what you’re passionate about, by adding it to your profile.
                 </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-2 px-6 pb-[90px] mt-6 overflow-y-auto xs:max-h-[400px] s:max-h-[600px] ">
-                {PASSIONS_DATA_ARRAY.map((item) => (
-                    <PassionButton
-                        key={item}
-                        label={item}
-                        isSelected={selectedPassions.includes(item)}
-                        disabled={selectedPassions.length >= 5 && !selectedPassions.includes(item)}
-                        onClick={() => togglePassion(item)}
-                    />
-                ))}
+            <div className="flex-1 overflow-y-auto px-6 py-4">
+                <div className="flex flex-wrap justify-center gap-2">
+                    {PASSIONS_DATA_ARRAY.map((item) => (
+                        <PassionButton
+                            key={item}
+                            label={item}
+                            isSelected={selectedPassions.includes(item)}
+                            disabled={
+                                selectedPassions.length >= 5 && !selectedPassions.includes(item)
+                            }
+                            onClick={() => togglePassion(item)}
+                        />
+                    ))}
+                </div>
             </div>
 
-            <div className="fixed bottom-12 w-full p-6 bg-white border-t border-gray-200">
+            <div className="sticky bottom-0 w-full p-6 bg-white border-t border-gray-200">
                 <Button
                     title={`Continue (${selectedPassions.length}/5)`}
                     className="w-full"

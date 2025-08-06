@@ -34,16 +34,19 @@ export const DefaultSwipeSlider = ({
     };
 
     const handleTouchEnd = () => {
+        if (!images) return;
         const distance = startX.current - endX.current;
-        if (distance > 50 && index < images.length - 1) {
+        if (distance > 50 && index < images?.length - 1) {
             setIndex((prev) => prev + 1);
         } else if (distance < -50 && index > 0) {
             setIndex((prev) => prev - 1);
         }
     };
 
+    if (!images) return;
+
     return (
-        <div className="flex justify-center items-center relative w-full h-[500px] xs:h-[490px] s:h-[670px] sm:h-[700px] md:h-[800px] overflow-hidden rounded-[8px] bg-primary touch-pan-x">
+        <div className="flex justify-center items-center relative w-full h-full overflow-hidden rounded-[8px] bg-white touch-pan-x">
             {images[index] && (
                 <div
                     className="absolute inset-0 z-0 scale-[1.1] bg-cover bg-center blur-[24px]"
@@ -53,7 +56,7 @@ export const DefaultSwipeSlider = ({
 
             <div className="absolute inset-0 bg-black/30 z-0" />
 
-            <SliderProgressBar activeIndex={index} total={images.length} />
+            <SliderProgressBar activeIndex={index} total={images?.length} />
 
             <div
                 className="flex h-full transition-transform duration-300 ease-in-out relative z-10"
