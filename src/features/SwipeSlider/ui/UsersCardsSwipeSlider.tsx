@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import { IUser, UserActionType } from '@/entities/User/model/user.model';
 import { UserCard } from '@/entities/User/ui/UserCard';
 import { Modal } from '@/shared/UI/Modal';
@@ -25,11 +25,7 @@ export const UsersCardsSwipeSlider = ({ users = [] }: IUsersCardsSwipeSlider) =>
     const { mutate } = useUserActions();
 
     //MEMO
-    const currentUser = useMemo(() => {
-        if (!users.length || index >= users.length) return null;
-        return users[index];
-    }, [users, index]);
-
+    const currentUser = useMemo(() => users[index], [users, index]);
     const nextUser = useMemo(() => users[index + 1], [users, index]);
     const previousUser = useMemo(() => users[index - 1], [users, index]);
 
@@ -38,52 +34,19 @@ export const UsersCardsSwipeSlider = ({ users = [] }: IUsersCardsSwipeSlider) =>
         if (!currentUser) setIsOpenModal(true);
     }, [currentUser]);
 
-    //FUNCTIONS
-    const handleTouchStart = (e: React.TouchEvent) => {
+    //CALLBACK
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
         touchStartX.current = e.changedTouches[0].clientX;
         setTransition(false);
-    };
+    }, []);
 
-    const handleTouchMove = (e: React.TouchEvent) => {
+    const handleTouchMove = useCallback((e: React.TouchEvent) => {
         if (touchStartX.current === null) return;
         const delta = e.changedTouches[0].clientX - touchStartX.current;
         setOffset(delta);
-    };
+    }, []);
 
-    const handleAction = (action: UserActionType) => {
-        if (action === 'rewind' && index === 0) return;
-
-        const direction =
-            action === 'like' || action === 'superLike' ? 1000 : action === 'dislike' ? -1000 : 0;
-        const isRewind = action === 'rewind';
-        const isSuperlike = action === 'superLike';
-
-        const swipeDelay = isSuperlike ? 2500 : 900;
-
-        setTimeout(() => {
-            if (isRewind) {
-                setIsRewinding(true);
-                setOffset(-1000);
-            } else {
-                setOffset(direction);
-            }
-            setTransition(true);
-        }, swipeDelay - 200);
-
-        setTimeout(() => {
-            setIndex((prev) => (isRewind ? prev - 1 : prev + 1));
-            setOffset(0);
-            setTransition(false);
-
-            if (isRewind) {
-                setIsRewinding(false);
-            }
-        }, swipeDelay);
-
-        mutate({ userId: currentUser.id, action });
-    };
-
-    const handleTouchEnd = () => {
+    const handleTouchEnd = useCallback(() => {
         if (touchStartX.current === null) return;
 
         const threshold = 80;
@@ -95,23 +58,53 @@ export const UsersCardsSwipeSlider = ({ users = [] }: IUsersCardsSwipeSlider) =>
             const action: UserActionType = offset < -threshold ? 'dislike' : 'like';
             mutate({ userId: currentUser.id, action });
 
-            setTimeout(() => {
-                setIndex((prev) => prev + 1);
-                setOffset(0);
-                setTransition(false);
-            }, 250);
+            setIndex((prev) => prev + 1);
+            setOffset(0);
+            setTransition(false);
         } else {
             setTransition(true);
             setOffset(0);
         }
 
         touchStartX.current = null;
-    };
+    }, [offset, currentUser]);
 
-    const handleCloseModal = () => {
+    const handleAction = useCallback(
+        (action: UserActionType) => {
+            if (action === 'rewind' && index === 0) return;
+
+            const direction =
+                action === 'like' || action === 'superLike'
+                    ? 1000
+                    : action === 'dislike'
+                      ? -1000
+                      : 0;
+            const isRewind = action === 'rewind';
+
+            setTransition(true);
+            setOffset(direction);
+
+            if (isRewind) {
+                setIsRewinding(true);
+                setOffset(-1000);
+            }
+
+            setTimeout(() => {
+                setIndex((prevIndex) => (isRewind ? prevIndex - 1 : prevIndex + 1));
+                setOffset(0);
+                setTransition(false);
+                setIsRewinding(false);
+            }, 350);
+
+            mutate({ userId: currentUser.id, action });
+        },
+        [index, currentUser?.id],
+    );
+
+    const handleCloseModal = useCallback(() => {
         setIndex(0);
         setIsOpenModal(false);
-    };
+    }, []);
 
     return (
         <div className="relative w-full h-full overflow-hidden rounded-[8px] bg-gray-blue-light touch-pan-x">

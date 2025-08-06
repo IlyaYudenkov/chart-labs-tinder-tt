@@ -2,6 +2,7 @@ import cl from './_UserCard.module.scss';
 import { IUser, UserActionType } from '@/entities/User/model/user.model';
 import { SlideOverlay } from '@/features/SwipeSlider/components/SlideOverlay';
 import { cls } from '@/shared/lib/classes.lib';
+import { useMemo } from 'react';
 
 interface IUserCard {
     user: IUser;
@@ -26,13 +27,14 @@ export const UserCard = ({
     onTouchEnd,
     handleAction,
 }: IUserCard) => {
-    const rotation = Math.max(Math.min(offset / 20, 20), -20);
+    //MEMO
+    const rotation = useMemo(() => Math.max(Math.min(offset / 20, 20), -20), [offset]);
 
+    //VARIABLE
     const style = {
         transform: isTop ? `translateX(${offset}px) rotate(${rotation}deg)` : '',
         transition: `transform ${transition ? '0.5s' : '0s'} ease`,
     };
-
     return (
         <div
             className={cls(cl.card, isTop ? cl.topCard : cl.bottomCard)}
@@ -41,7 +43,7 @@ export const UserCard = ({
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
         >
-            <div className={cl.bgBlur} style={{ backgroundImage: `url(${user.photoUrl})` }} />
+            <div className={cl.bgBlur} />
             <div className={cl.overlay} />
 
             <div className={cl.imgContainer}>
