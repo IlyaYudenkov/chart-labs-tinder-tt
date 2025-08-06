@@ -26,10 +26,10 @@ export const SliderProgressBar = ({
                     className={cls(
                         `flex-1 h-1 rounded-full transition-all duration-300`,
                         idx < activeIndex
-                            ? 'bg-primary'
+                            ? 'bg-white'
                             : idx === activeIndex
                               ? 'bg-dark-gray-blue'
-                              : 'bg-primary',
+                              : 'bg-white',
                         classNameEl,
                     )}
                 />

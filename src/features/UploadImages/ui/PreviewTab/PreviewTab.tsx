@@ -28,7 +28,7 @@ export const PreviewTab = () => {
         setUserImages(filteredImages);
     }, [photos]);
     return (
-        <div className="rounded-[8px] p-3">
+        <div className="h-full rounded-[8px] p-3">
             {userImages.length ? (
                 <DefaultSwipeSlider
                     age={age}

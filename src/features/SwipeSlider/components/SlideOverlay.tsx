@@ -32,12 +32,12 @@ export const SlideOverlay = ({
 }: ISlideOverlay) => {
     return (
         <div className="flex flex-col absolute bottom-0 left-0 w-full ">
-            <div className="flex flex-col gap-10 p-4 bg-gradient-to-t from-secondary via-transparent to-transparent">
+            <div className="flex flex-col gap-10 p-4 bg-gradient-to-t from-black via-transparent to-transparent">
                 <div className="flex justify-between">
                     <div className="flex gap-3">
-                        <p className="text-primary text-[32px] font-bold select-none">
+                        <p className="text-white text-[32px] font-bold select-none">
                             {name}&nbsp;
-                            <span className="text-primary text-2xl font-normal">{age}</span>
+                            <span className="text-white text-2xl font-normal">{age}</span>
                         </p>
                         {isVerified && <img src={VerifiedIcon} alt="verified" />}
                     </div>

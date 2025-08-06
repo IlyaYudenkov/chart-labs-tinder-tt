@@ -23,7 +23,7 @@ export const MainPage = () => {
     if (isLoading || !isUsersLoaded) return <Loader />;
 
     return (
-        <main className="mt-12 h-[calc(92vh-50px)] overflow-hidden">
+        <main className="flex flex-col h-full overflow-hidden">
             <UsersCardsSwipeSlider users={users} />
         </main>
     );

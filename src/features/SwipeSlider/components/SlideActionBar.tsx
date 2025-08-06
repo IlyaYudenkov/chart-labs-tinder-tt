@@ -69,7 +69,7 @@ export const SlideActionBar = ({
     }, [userId]);
 
     return (
-        <div className="flex px-4 py-3 w-full bg-secondary z-20 select-none">
+        <div className="flex px-4 py-3 w-full bg-black z-20 select-none">
             <div className="flex justify-between items-center w-full">
                 {SLIDE_ACTION_BUTTONS.map((btn) => (
                     <Button

@@ -7,8 +7,8 @@ import { Modal } from '@/shared/UI/Modal';
 import { useEffect, useMemo, useState } from 'react';
 
 interface IEditTab {
-    images?: string[];
-    setImages?: (val: string[]) => void;
+    images: string[];
+    setImages: (val: string[]) => void;
 }
 
 export const EditTab = ({ images, setImages }: IEditTab) => {
@@ -69,12 +69,14 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
         dispatch(setPhotos(images));
         sessionStorage.setItem(AUTH_SS_KEY, 'true');
         dispatch(setIsAuth(true));
-        setTimeout(() => setIsOpenModal(false), 1000);
+        setTimeout(() => {
+            setIsOpenModal(false);
+        }, 1000);
     };
 
     return (
-        <div className="xs:py-10 md:py-0">
-            <div className="flex flex-wrap gap-2 justify-center max-w-100 mx-auto px-2 py-2.5 ">
+        <div className="flex flex-col xs:py-2 md:py-0 h-full">
+            <div className="flex flex-wrap gap-2 justify-center mx-auto px-2 py-2.5 ">
                 {images.map((_, index) => (
                     <Input.Image
                         key={index}
@@ -100,7 +102,7 @@ export const EditTab = ({ images, setImages }: IEditTab) => {
                         </span>
                     )}
                 </div>
-                <div className="flex justify-between w-full bg-primary px-4 py-3 mb-3 border-t border-b border-gray-blue-muted">
+                <div className="flex justify-between w-full bg-white px-4 py-3 mb-3 border-t border-b border-gray-blue-muted">
                     <span className="text-graphite">Smart Photos</span>
                     <Input.Checkbox />
                 </div>

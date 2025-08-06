@@ -50,7 +50,7 @@ export const SignUpForm = () => {
     if (isLoading) return <Loader />;
 
     return (
-        <div className="relative h-[calc(100vh-50px)]">
+        <div className="relative h-full">
             {steps.map((step, i) => (
                 <div
                     key={i}
